@@ -1,5 +1,5 @@
 {
-  "name": "gml-loder_src",
+  "name": "gml-loader_src",
   "version": "0.0.1",
   "description": "describe your project here",
   "scripts": {
@@ -12,11 +12,15 @@
   },
   "author": "operali",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@types/loader-utils": "^1.1.3",
+    "loader-utils": "^1.2.3",
+    "schema-utils": "^2.5.0"
+  },
   "devDependencies": {
     "@jsrock/core_dep": "latest",
-    "@jsrock/webpack_dep": "latest",
-    "@jsrock/run_script": "latest"
+    "@jsrock/run_script": "latest",
+    "@jsrock/webpack_dep": "latest"
   },
   "jest": {
     "transform": {

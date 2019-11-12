@@ -1,11 +1,8 @@
 {
-  "name": "gml-loder",
-  "version": "0.0.1",
+  "name": "gml-loader",
+  "version": "0.0.13",
   "description": "describe your project here",
-  "engines": {
-    "node": ">=0.4.0"
-  },
-  "main": "index.js",
+  "main": "gml-loader/node/index",
   "author": "sky.li",
   "license": "MIT",
   "dependencies": {}

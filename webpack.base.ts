@@ -2,11 +2,16 @@ import projectConfig from './project.config'
 
 import path from 'path';
 import webpack from 'webpack';
-import CopyWebpackPlugin from 'copy-webpack-plugin'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import merge from 'webpack-merge'
 
 type config_t = { [key: string]: any }
-const config: webpack.Configuration & config_t = {
+
+
+
+const webConfig: webpack.Configuration & config_t = {
+  target: "web",
   entry: {
     [projectConfig.moduleName]: path.resolve(__dirname, './src/index.ts')
   },
@@ -14,7 +19,7 @@ const config: webpack.Configuration & config_t = {
     library: "[name]",
     libraryTarget: "umd",
     umdNamedDefine: true, // generate: `define('${moduleName}', [...], factory)`
-    filename: "[name].js",
+    filename: "web/index.js",
     path: path.resolve(__dirname, 'build')
   },
   // externals: ['@babel/polyfill', "core-js", "string_decoder"],
@@ -40,14 +45,12 @@ const config: webpack.Configuration & config_t = {
       {
         from: "node_modules/requirejs/require.js",
         to: "./"
-      }
-    ]),
-    new HtmlWebpackPlugin({
-      templateParameters: {
-        'moduleName': projectConfig.moduleName
       },
-      template: 'example/module.ejs'
-    })
+      {
+        from: "./example",
+        to: "./"
+      }
+    ])
   ],
   devServer: {
     open: true,
@@ -63,4 +66,16 @@ const config: webpack.Configuration & config_t = {
   }
 };
 
-export default config;
+let nodeConfig = merge(webConfig, {
+  target: "node",
+  output: {
+    library: "[name]",
+    libraryTarget: "umd",
+    umdNamedDefine: true, // generate: `define('${moduleName}', [...], factory)`
+    filename: "node/index.js",
+    path: path.resolve(__dirname, 'build')
+  },
+})
+
+const base = { webConfig, nodeConfig };
+export default base;
